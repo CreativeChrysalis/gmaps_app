@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GmapsApp</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= yield %>
+
+    <script>
+      function initMap() {
+       var latLong = {lat: 35.590142, lng: -82.553293};
+
+      var image = "<%= asset_path 'unicorn_icon.png'%>"
+
+       var map = new google.maps.Map(document.getElementById('map'), {
+         zoom: 5,
+         center: latLong,
+         scrollwheel: false
+       });
+       var marker = new google.maps.Marker({
+         position: latLong,
+         map: map,
+         title: 'Cute Marker',
+         icon: image,
+         animation: google.maps.Animation.BOUNCE
+       });
+
+      //  function initMap() {
+      //   var latLong = {lat: 35.550917, lng: -82.350139};
+       //
+      //  var image = "<%= asset_path 'unicorn_icon.png'%>"
+       //
+      //   var map = new google.maps.Map(document.getElementById('map'), {
+      //     zoom: 15,
+      //     center: latLong,
+      //     scrollwheel: false
+      //   });
+      //   var marker = new google.maps.Marker({
+      //     position: latLong,
+      //     map: map,
+      //     title: 'Cute Marker',
+      //     icon: image
+      //   });
+
+        var contentString = '<h2>Cute Marker</h2>' + '<p>Glitter for everyone!</p>';
+        var infowindow = new google.maps.InfoWindow({
+        content: contentString
+        });
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.open(map,marker);
+        });
+      }
+
+      </script>
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1YUoyyJVwai_VeqvrFff4tTaRAJt5XL0&callback=initMap">
+    </script>
+
+  </body>
+</html>
