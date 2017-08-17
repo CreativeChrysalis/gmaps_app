@@ -14,30 +14,49 @@
 //= require rails-ujs
 //= require jquery
 //= require_tree .
+
+// ***anthing required here will be available throught the whole app, it is
+// part of the asset pipeline
+
+// First alert shown, on page load:
 $(document).ready(function () {
-      alert("the document ready function is working");
       this.initMap();
 });
-
 function initMap() {
-    var latLong = {lat: 35.591391, lng: -82.551023};
-    var image = "<%= asset_path ('unicorn_icon.png')%>"
+
+    var sites = [
+      ['Machu Picchu', -13.163047, -72.544566, 4],
+      ['Temple of the 3 Windows', -13.163726, -72.544881, 5],
+      ['House of the Guardian to the Funerary Rock', -13.165398, -72.544624, 3],
+      ['Sacred Rock', -13.161846, -72.546104, 2],
+      ['Intihuatana', -13.163439, -72.546732, 1]
+    ];
+    
+    var latLong = new google.maps.LatLng(latitude, longitude);
+    var image = "<%= asset_path ('dragon.png')%>";
+    var fishImg = "<%= asset_path ('Fish_Icon_trans.png') %>";
     var mapOptions = {
       zoom: 10,
       center: latLong,
       scrollwheel: false
     };
     var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    alert("the map init method is being fired");
     var marker = new google.maps.Marker({
       position: latLong,
       map: map,
       title: 'Stronbox West',
-      draggable: true,
-      icon: image,
-      animation: google.maps.Animation.DROP
+      icon: fishImg,
+      animation: google.maps.Animation.BOUNCE
     });
-    var contentString = '<h2>Unicorn Village</h2>' + '<p> Dont Litter, Glitter!</p>';
+    for (i = 0; i < sites.length; i++) {
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng(sites[i][1], sites[i][2]),
+            map: map,
+            icon: image,
+            animation: google.maps.Animation.DROP
+        });
+    }
+    var contentString = '<h2>RARRRRRr</h2>' + address;
     var infowindow = new google.maps.InfoWindow({
        content: contentString
     });
